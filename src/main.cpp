@@ -208,7 +208,6 @@ void loop() {
 
 void calculateAction() {
     static unsigned long aboveThresholdStartTime = 0;
-    static bool aboveThreshold = false;
     static bool apiCalled = false;
 
     if (frequency >= frequencyTrashold) {
@@ -219,15 +218,12 @@ void calculateAction() {
         
         // Check if the duration above the threshold has exceeded delayToTrigger
         if (millis() - aboveThresholdStartTime >= delayToTriger * 1000) {
-            aboveThreshold = true;
             if (!apiCalled) {
                 turnWentOn();
                 apiCalled = true;
             }
         }
     } else {
-        // Reset when frequency falls below threshold
-        aboveThreshold = false;
         apiCalled = false;
         aboveThresholdStartTime = 0;  // Reset the start time
     }
